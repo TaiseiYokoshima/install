@@ -2,34 +2,4 @@
 
 set -e 
 
-nix-shell -p git curl --run '
-
-curl -L https://raw.githubusercontent.com/TaiseiYokoshima/ssh/main/install_config > ~/.ssh/config
-
-chmod 700 ~/Downloads/github.pub
-chmod 600 ~/Downloads/github
-cp ~/Downloads/github ~/.ssh/github
-cp ~/Downloads/github.pub ~/.ssh/github.pub
-
-git clone mgt:TaiseiYokoshima/.dotfiles --recurse ~/.dotfiles
-cd ~/.dotfiles
-./update
-./link_all.bash
-
-cp ~/Downloads/github ~/.config/ssh/github
-cp ~/Downloads/github.pub ~/.config/ssh/github.pub
-cd ~/.ssh
-rm *
-echo "Include ~/.config/ssh/config" > ~/.ssh/config
-
-cd /home/rom/.config/nixos
-cp /etc/nixos/hardware-configuration.nix ./hardware/$1.nix
-nix --extra-experimental-features "nix-command flakes" flake update
-sudo nixos-rebuild switch --flake .#$1 --install-bootloader
-sudo nixos-rebuild boot --flake .#$1
-
-cd /home/rom/.config/home-manager
-nix --extra-experimental-features "nix-command flakes" flake update
-home-manager switch --flake .#$2
-
-'
+nix-shell -p git curl --run "./install $1 $2"
