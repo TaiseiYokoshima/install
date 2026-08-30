@@ -29,6 +29,9 @@ GIT_SSH_COMMAND="ssh -i $key \
    git@github.com:TaiseiYokoshima/.dotfiles \
    ~/.dotfiles
 
+print_separator
+echo "initial clone done, moving on to recurse clone"
+
 mkdir -p ~/.ssh
 cp "$tmp_path/config" ~/.ssh/config
 cp "$key" ~/.ssh/github
