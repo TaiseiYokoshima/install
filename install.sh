@@ -18,7 +18,8 @@ mkdir -p ~/.ssh
 cp "$tmp_path/config" ~/.ssh/config
 cp ~/Downloads/github ~/.ssh/github
 chmod 600 ~/.ssh/github
-echo "key moved and initial ssh setup"
+python "$tmp_path/test_ssh.py"
+echo "key found, moved and initial ssh setup"
 
 cd ~
 git clone mgh:TaiseiYokoshima/.dotfiles --recurse
