@@ -37,7 +37,11 @@ cp "$tmp_path/config" ~/.ssh/config
 cp "$key" ~/.ssh/github
 chmod 600 ~/.ssh/github
 
+echo "moved key to ~/.ssh"
+
+echo "recurse cloning..."
 cd ~/.dotfiles
+git remote set-url origin mgh:TaiseiYokoshima/.dotfiles
 git pull origin main --recurse
 
 print_separator
