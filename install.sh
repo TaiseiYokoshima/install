@@ -12,47 +12,45 @@ printf "Press enter when ssh is downloaded to proceed"
 read </dev/tty
 echo "continuing"
 
-chmod 600 ~/Downloads/github
 
-   
-GIT_SSH_COMMAND="ssh -i $HOME/Downloads/github \
+cp ~/Downloads/ "$tmp_path"
+chmod 600 "$tmp_path/github"
+
+GIT_SSH_COMMAND="ssh -i $tmp_path/github \
    -o IdentitiesOnly=yes \
    -o StrictHostKeyChecking=accept-new \
    -o BatchMode=yes \
    " \
-   git clone --recurse-submodules \
+   git clone \
    git@github.com:TaiseiYokoshima/.dotfiles \
    ~/.dotfiles
 
-print_separator
-echo ".dotfiles cloned"
-
 mkdir -p ~/.ssh
-echo "Include ~/.config/ssh/config" > ~/.ssh/config
+cp "$tmp_path"/config ~/.ssh/config
+mv "$tmp_path/github" ~/.ssh/github
 
 cd ~/.dotfiles
-./link_all.bash
-mkdir -p ~/.config/ssh/keys/
-mv ~/Downloads/github ~/.config/ssh/keys/github
-
-python setup_remotes.py
+git pull origin main --recurse
 
 print_separator
-echo "linked all the submodules"
+echo ".dotfiles cloned"
+./link_all.bash
 
+print_separator
+echo "linked all config"
 
+mkdir -p ~/.config/ssh/keys/
+mv ~/.ssh/github ~/.config/ssh/keys/github
 
-echo "ssh key is now setup"
-echo "updating ..."
-./update
+cd ~/.ssh
+rm *
+echo "Include ~/.config/ssh/config" > ~/.ssh/config
+python "$tmp_path/test_ssh.py"
 
+cd ~/.dotfiles
+./update.sh
 print_separator
 echo "update complete"
-
-echo "Include ~/.config/ssh/config" > ~/.ssh/config
-
-
-
 
 printf "OS entry: "
 read os </dev/tty
@@ -64,13 +62,6 @@ read home </dev/tty
 echo "Entries Selected"
 echo "OS: $os"
 echo "Home: $home"
-
-
-cd ~/.ssh
-rm *
-echo "Include ~/.config/ssh/config" > ~/.ssh/config
-
-python "$tmp_path/test_ssh.py"
 
 cd ~/.config/nixos
 cp /etc/nixos/hardware-configuration.nix ./hardware/$os.nix
@@ -84,7 +75,3 @@ cd ~/.config/home-manager
 # nix --extra-experimental-features "nix-command flakes" flake update
 nix flake lock
 home-manager switch --flake .#$home
-
-
-rm ~/.ssh/known_hosts
-rm ~/.ssh/known_hosts.old
