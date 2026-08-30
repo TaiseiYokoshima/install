@@ -26,6 +26,7 @@ echo "Include ~/.config/ssh/config" > ~/.ssh/config
 
 cd ~/.dotfiles
 ./link_all.bash
+mkdir -p ~/.config/ssh/keys/
 mv ~/Downloads/github ~/.config/ssh/keys/github
 
 python setup_remotes.py
