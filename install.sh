@@ -10,15 +10,17 @@ print_separator() {
 
 echo "tmp_path: $tmp_path"
 
+
+key=~/Downloads/github
+
 firefox >/dev/null 2>&1 </dev/null &
 printf "Press enter when ssh is downloaded to proceed"
 read </dev/tty
 echo "continuing"
 
-cp ~/Downloads/github "$tmp_path/github"
-chmod 600 "$tmp_path/github"
+chmod 600 "$key"
 
-GIT_SSH_COMMAND="ssh -i $tmp_path/github \
+GIT_SSH_COMMAND="ssh -i $key \
    -o IdentitiesOnly=yes \
    -o StrictHostKeyChecking=accept-new \
    -o BatchMode=yes \
@@ -29,7 +31,8 @@ GIT_SSH_COMMAND="ssh -i $tmp_path/github \
 
 mkdir -p ~/.ssh
 cp "$tmp_path/config" ~/.ssh/config
-mv "$tmp_path/github" ~/.ssh/github
+cp "$key" ~/.ssh/github
+chmod 600 ~/.ssh/github
 
 cd ~/.dotfiles
 git pull origin main --recurse
@@ -43,6 +46,7 @@ echo "linked all config"
 
 mkdir -p ~/.config/ssh/keys/
 mv ~/.ssh/github ~/.config/ssh/keys/github
+chmod 600 ~/.config/ssh/keys/github
 
 cd ~/.ssh
 rm *
