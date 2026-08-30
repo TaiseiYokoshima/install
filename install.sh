@@ -24,9 +24,6 @@ GIT_SSH_COMMAND="ssh -i $HOME/Downloads/github \
    git@github.com:TaiseiYokoshima/.dotfiles \
    ~/.dotfiles
 
-
-exit
-
 print_separator
 echo ".dotfiles cloned"
 
