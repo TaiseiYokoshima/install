@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
-set -euo pipefail
-
+set -eu
 
 print_separator() {
    echo ""
@@ -8,8 +7,7 @@ print_separator() {
    echo ""
 }
 
-
-firefox &
+firefox >/dev/null 2>&1 &
 echo "Press enter when ssh is downloaded"
 read
 echo "continuing"
