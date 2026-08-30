@@ -9,7 +9,7 @@ print_separator() {
 
 firefox >/dev/null 2>&1 </dev/null &
 echo "Press enter when ssh is downloaded"
-read
+read </dev/tty
 echo "continuing"
 
 chmod 600 ~/Downloads/github
