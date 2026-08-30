@@ -3,7 +3,7 @@ import subprocess
 message = "Hi TaiseiYokoshima! You've successfully authenticated, but GitHub does not provide shell access."
 
 result = subprocess.run(
-    ["ssh", "-T", "mgh"],
+    ["ssh", "-o", "BatchMode=yes", "-o", "StrictHostKeyChecking=accept-new", "-T", "mgh"],
     capture_output=True,
     text=True
 ).stderr
