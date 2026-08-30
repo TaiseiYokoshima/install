@@ -45,8 +45,14 @@ echo "update complete"
 echo "Include ~/.config/ssh/config" > ~/.ssh/config
 
 
-read -p "OS entry: " os
-read -p "Home entry: " home
+
+
+echo "OS entry: "
+read os </dev/tty
+
+echo "Home entry: "
+read home </dev/tty
+
 
 echo "Entries Selected"
 echo "OS: $os"
