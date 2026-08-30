@@ -9,7 +9,7 @@ print_separator() {
 }
 
 
-firefox
+firefox &
 echo "Press enter when ssh is downloaded"
 read
 echo "continuing"
