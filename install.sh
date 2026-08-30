@@ -7,11 +7,13 @@ print_separator() {
    echo ""
 }
 
+
+echo "tmp_path: $tmp_path"
+
 firefox >/dev/null 2>&1 </dev/null &
 printf "Press enter when ssh is downloaded to proceed"
 read </dev/tty
 echo "continuing"
-
 
 cp ~/Downloads/github "$tmp_path/github"
 chmod 600 "$tmp_path/github"
