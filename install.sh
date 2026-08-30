@@ -8,28 +8,33 @@ print_separator() {
    echo ""
 }
 
-gh auth login
-print_separator
-echo "gh cli initial setup complete"
-gh repo clone TaiseiYokoshima/.dotfiles ~/.dotfiles -- --recurse
-print_separator
-echo "clone the .dotfiles repo and its submodules"
 
-cd ~/.dotfiles
-./link_all.bash
-python setup_remotes.py
-
-echo "linked all the submodules"
-
-print_separator
+firefox
 echo "Press enter when ssh is downloaded"
 read
 echo "continuing"
 
 chmod 600 ~/Downloads/github
+
+GIT_SSH_COMMAND="ssh -i $HOME/Downloads/github -o IdentitiesOnly=yes" \
+   git clone --recurse-submodules \
+   git@github.com:TaiseiYokoshima/.dotfiles ~/.dotfiles 
+
+# git clone TaiseiYokoshima/.dotfiles ~/.dotfiles --recurse
+
+print_separator
+echo ".dotfiles cloned"
+
+cd ~/.dotfiles
+./link_all.bash
+python setup_remotes.py
+
+print_separator
+echo "linked all the submodules"
+
 mv ~/Downloads/github ~/.config/ssh/keys/github
 
-mkdir ~/.ssh
+mkdir -p ~/.ssh
 echo "Include ~/.config/ssh/config" > ~/.ssh/config
 
 echo "ssh key is now setup"
