@@ -70,9 +70,11 @@ cd ~/.config/nixos
 cp /etc/nixos/hardware-configuration.nix ./hardware/$os.nix
 # nix --extra-experimental-features "nix-command flakes" flake update
 export NIX_CONFIG='experimental-features = nix-command flakes'
+nix flake lock
 sudo nixos-rebuild switch --flake .#$os --install-bootloader
 sudo nixos-rebuild boot --flake .#$os
 
 cd ~/.config/home-manager
 # nix --extra-experimental-features "nix-command flakes" flake update
+nix flake lock
 home-manager switch --flake .#$home
