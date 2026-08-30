@@ -7,7 +7,7 @@ print_separator() {
    echo ""
 }
 
-firefox >/dev/null 2>&1 &
+firefox >/dev/null 2>&1 </dev/null &
 echo "Press enter when ssh is downloaded"
 read
 echo "continuing"
