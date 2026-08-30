@@ -8,7 +8,7 @@ print_separator() {
 }
 
 firefox >/dev/null 2>&1 </dev/null &
-echo "Press enter when ssh is downloaded"
+printf "Press enter when ssh is downloaded to proceed"
 read </dev/tty
 echo "continuing"
 
@@ -48,10 +48,10 @@ echo "Include ~/.config/ssh/config" > ~/.ssh/config
 
 
 
-echo "OS entry: "
+printf "OS entry: "
 read os </dev/tty
 
-echo "Home entry: "
+printf "Home entry: "
 read home </dev/tty
 
 
