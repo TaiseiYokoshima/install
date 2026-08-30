@@ -18,22 +18,22 @@ GIT_SSH_COMMAND="ssh -i $HOME/Downloads/github -o IdentitiesOnly=yes" \
    git clone --recurse-submodules \
    git@github.com:TaiseiYokoshima/.dotfiles ~/.dotfiles 
 
-# git clone TaiseiYokoshima/.dotfiles ~/.dotfiles --recurse
-
 print_separator
 echo ".dotfiles cloned"
 
+mkdir -p ~/.ssh
+echo "Include ~/.config/ssh/config" > ~/.ssh/config
+
 cd ~/.dotfiles
 ./link_all.bash
+mv ~/Downloads/github ~/.config/ssh/keys/github
+
 python setup_remotes.py
 
 print_separator
 echo "linked all the submodules"
 
-mv ~/Downloads/github ~/.config/ssh/keys/github
 
-mkdir -p ~/.ssh
-echo "Include ~/.config/ssh/config" > ~/.ssh/config
 
 echo "ssh key is now setup"
 echo "updating ..."
