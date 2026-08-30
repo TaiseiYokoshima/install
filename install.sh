@@ -14,9 +14,18 @@ echo "continuing"
 
 chmod 600 ~/Downloads/github
 
-GIT_SSH_COMMAND="ssh -i $HOME/Downloads/github -o IdentitiesOnly=yes" \
+   
+GIT_SSH_COMMAND="ssh -i $HOME/Downloads/github \
+   -o IdentitiesOnly=yes \
+   -o StrictHostKeyChecking=accept-new \
+   -o BatchMode=yes \
+   " \
    git clone --recurse-submodules \
-   git@github.com:TaiseiYokoshima/.dotfiles ~/.dotfiles 
+   git@github.com:TaiseiYokoshima/.dotfiles \
+   ~/.dotfiles
+
+
+exit
 
 print_separator
 echo ".dotfiles cloned"
@@ -78,3 +87,7 @@ cd ~/.config/home-manager
 # nix --extra-experimental-features "nix-command flakes" flake update
 nix flake lock
 home-manager switch --flake .#$home
+
+
+rm ~/.ssh/known_hosts
+rm ~/.ssh/known_hosts.old
