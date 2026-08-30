@@ -5,51 +5,29 @@ print_separator() {
    echo ""
    echo ""
    echo ""
+   sleep 2
+   echo "$1"
 }
-
-
-echo "tmp_path: $tmp_path"
-
-
-key=~/Downloads/github
 
 firefox >/dev/null 2>&1 </dev/null &
 printf "Press enter when ssh is downloaded to proceed"
 read </dev/tty
 echo "continuing"
 
-chmod 600 "$key"
-
-GIT_SSH_COMMAND="ssh -i $key \
-   -o IdentitiesOnly=yes \
-   -o StrictHostKeyChecking=accept-new \
-   -o BatchMode=yes \
-   " \
-   git clone \
-   git@github.com:TaiseiYokoshima/.dotfiles \
-   ~/.dotfiles
-
-print_separator
-echo "initial clone done, moving on to recurse clone"
-
 mkdir -p ~/.ssh
 cp "$tmp_path/config" ~/.ssh/config
-cp "$key" ~/.ssh/github
+cp ~/Downloads/github ~/.ssh/github
 chmod 600 ~/.ssh/github
+echo "key moved and initial ssh setup"
 
-echo "moved key to ~/.ssh"
+cd ~
+git clone mgh:TaiseiYokoshima/.dotfiles --recurse
 
-echo "recurse cloning..."
-cd ~/.dotfiles
-git remote set-url origin mgh:TaiseiYokoshima/.dotfiles
-git pull origin main --recurse
+print_separator "dotfiles cloned"
 
-print_separator
-echo ".dotfiles cloned"
 ./link_all.bash
 
-print_separator
-echo "linked all config"
+print_separator "dotfiles linked"
 
 mkdir -p ~/.config/ssh/keys/
 mv ~/.ssh/github ~/.config/ssh/keys/github
@@ -60,10 +38,12 @@ rm *
 echo "Include ~/.config/ssh/config" > ~/.ssh/config
 python "$tmp_path/test_ssh.py"
 
+print_separator "key moved and final ssh setup"
+
 cd ~/.dotfiles
 ./update.sh
-print_separator
-echo "update complete"
+
+print_separator "update complete"
 
 printf "OS entry: "
 read os </dev/tty
@@ -84,7 +64,11 @@ nix flake lock
 sudo nixos-rebuild switch --flake .#$os
 sudo nixos-rebuild boot --flake .#$os
 
+print_separator "nixos built"
+
 cd ~/.config/home-manager
 # nix --extra-experimental-features "nix-command flakes" flake update
 nix flake lock
 home-manager switch --flake .#$home
+print_separator "home-manager built"
+echo "all complete"
