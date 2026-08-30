@@ -2,6 +2,7 @@
 set -e 
 
 tmp_path=/tmp/install_taisei_nixos
+export tmp_path
 
 mkdir -p "$tmp_path"
 

@@ -64,7 +64,7 @@ cd ~/.ssh
 rm *
 echo "Include ~/.config/ssh/config" > ~/.ssh/config
 
-ssh -T mgh
+python "$tmp_path/test_ssh.py"
 
 cd ~/.config/nixos
 cp /etc/nixos/hardware-configuration.nix ./hardware/$os.nix
