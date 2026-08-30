@@ -26,8 +26,8 @@ git clone mgh:TaiseiYokoshima/.dotfiles --recurse
 
 print_separator "dotfiles cloned"
 
+cd ~/.dotfiles
 ./link_all.bash
-
 print_separator "dotfiles linked"
 
 mkdir -p ~/.config/ssh/keys/
