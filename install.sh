@@ -26,7 +26,7 @@ GIT_SSH_COMMAND="ssh -i $tmp_path/github \
    ~/.dotfiles
 
 mkdir -p ~/.ssh
-cp "$tmp_path"/config ~/.ssh/config
+cp "$tmp_path/config" ~/.ssh/config
 mv "$tmp_path/github" ~/.ssh/github
 
 cd ~/.dotfiles
