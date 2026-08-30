@@ -59,9 +59,17 @@ echo "Entries Selected"
 echo "OS: $os"
 echo "Home: $home"
 
+
+cd ~/.ssh
+rm *
+echo "Include ~/.config/ssh/config" > ~/.ssh/config
+
+ssh -T mgh
+
 cd ~/.config/nixos
 cp /etc/nixos/hardware-configuration.nix ./hardware/$os.nix
 # nix --extra-experimental-features "nix-command flakes" flake update
+export NIX_CONFIG='experimental-features = nix-command flakes'
 sudo nixos-rebuild switch --flake .#$os --install-bootloader
 sudo nixos-rebuild boot --flake .#$os
 
