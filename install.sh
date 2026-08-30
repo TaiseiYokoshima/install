@@ -13,7 +13,7 @@ read </dev/tty
 echo "continuing"
 
 
-cp ~/Downloads/ "$tmp_path"
+cp ~/Downloads/github "$tmp_path/github"
 chmod 600 "$tmp_path/github"
 
 GIT_SSH_COMMAND="ssh -i $tmp_path/github \
